@@ -1,5 +1,7 @@
 import { readFileSync } from "fs";
 
+//https://adventofcode.com/2022/day/1
+
 function getMaxTotal(list: number[][]): number {
 	let max = -Infinity;
 	list.forEach(group => {
@@ -12,6 +14,12 @@ function getMaxTotal(list: number[][]): number {
 	return max;
 }
 
+function getTotalOfTopThree(list: number[][]): number {
+	const totals = list.map(sum);
+	const sorted = totals.sort((a, b) => b - a);
+	return sum(sorted.slice(0, 3));
+}
+
 const sum = (numbers: number[]): number  =>
 	numbers.reduce((total, number) => total + number, 0);
 
@@ -22,4 +30,5 @@ const parseFileInput = (path: string): number[][] => {
 	return parsedGroups;
 };
 
-export { getMaxTotal, parseFileInput };
+
+export { getMaxTotal, parseFileInput, getTotalOfTopThree };

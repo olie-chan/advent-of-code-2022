@@ -1,4 +1,4 @@
-import { getMaxTotal, parseFileInput } from "./solution";
+import { getMaxTotal, getTotalOfTopThree, parseFileInput } from "./solution";
 import path from "path";
 
 it("returns the biggest total of a group", () => {
@@ -20,4 +20,16 @@ it("parses a string into a list of numbers", () => {
 		[7000, 8000, 9000],
 		[10000],
 	]);
+});
+
+it("answers the first question", () => {
+	expect(
+		getMaxTotal(parseFileInput(path.join(__dirname, "./input.txt")))
+	).toEqual(68467);
+});
+
+it("gets the total for the top 3", () => {
+	expect(
+		getTotalOfTopThree(parseFileInput(path.join(__dirname, "./input.txt")))
+	).toEqual(203420);
 });
