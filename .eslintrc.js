@@ -34,5 +34,8 @@ module.exports = {
 			"error",
 			"always"
 		]
-	}
+	},
+	"ignorePatterns": [
+		"dist"
+	]
 };
