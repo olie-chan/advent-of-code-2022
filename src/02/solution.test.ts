@@ -1,4 +1,4 @@
-import { parseFileInput } from "./solution";
+import { calculateScore, parseFileInput, rules  } from "./solution";
 import path from "path";
 
 it("parses the sample input", () => {
@@ -7,4 +7,22 @@ it("parses the sample input", () => {
 		["B", "X"],
 		["C", "Z"],
 	]);
+});
+
+it("caculates the score", () => {
+	expect(
+		calculateScore({
+			list: parseFileInput(path.join(__dirname, "./sample.txt")),
+			rules,
+		})
+	).toEqual(15);
+});
+
+it("answers the question part 1", () => {
+	expect(
+		calculateScore({
+			list: parseFileInput(path.join(__dirname, "./input.txt")),
+			rules,
+		})
+	).toEqual(12434);
 });
