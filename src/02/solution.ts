@@ -25,7 +25,7 @@ const rules: Rules = {
 	},
 	Z: {//Scissors
 		self: 3,
-		A: 3,
+		A: 0,
 		B: 6,
 		C: 3,
 	}
