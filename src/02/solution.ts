@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-
+//https://adventofcode.com/2022/day/3
 type Opponent = "A" | "B" | "C";
 type Hand = "X" | "Y" | "Z";
 type Game = [Opponent, Hand];
