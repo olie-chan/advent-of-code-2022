@@ -23,16 +23,11 @@ it("gets the repeated letters", () => {
 	expect(getRepeatedLetters("abc", "bcd")).toStrictEqual(["b", "c"]);
 });
 
-it("concats multiples of three lines", () => {
-	expect(concatByMultiplesOfN([..."abcdef"], 6)).toStrictEqual(["abcdef"]);
-});
 
 it("answers the example question", () => {
-	const input = parseFileInput(path.join(__dirname, "./sample.txt")).map(
-		splitInTwo
-	);
-	expect(solution(input)).toEqual(157);
-	// expect(solution(concatByMultiplesOfN(input, 6))).toEqual(70);
+	const input = parseFileInput(path.join(__dirname, "./sample.txt"));
+	expect(solution(input.map(splitInTwo))).toEqual(157);
+	expect(solution((concatByMultiplesOfN(input, 3)))).toEqual(70);
 });
 
 it("answers the question", () => {

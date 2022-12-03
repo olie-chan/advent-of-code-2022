@@ -10,20 +10,17 @@ const splitInTwo = (input: string): [string, string] => [
 	input.slice(input.length / 2),
 ];
 
-const getRepeatedLetters = (left: string, right: string): string[] => {
-	const uniqueLeft = new Set([...left]);
-	const uniqueRight = new Set([...right]);
+const getRepeatedLetters = (...groups: string[]): string[] => {
+	const [longest, ...rest] = groups.map((group) => new Set(group)).sort((a, b) => b.size - a.size);
 	const repeated: string[] = [];
-	const [longer, shorter] =
-    uniqueLeft.size > uniqueRight.size
-    	? [uniqueLeft, uniqueRight]
-    	: [uniqueRight, uniqueLeft];
-	for (const letter of longer.values()) {
-		if (shorter.has(letter)) {
+	for (const letter of longest.values()) {
+		if (rest.filter((group) => group.has(letter)).length === rest.length) {
 			repeated.push(letter);
 		}
 	}
+
 	return repeated;
+
 };
 
 const parseFileInput = (path: string): string[] => {
@@ -31,7 +28,7 @@ const parseFileInput = (path: string): string[] => {
 	return contents;
 };
 
-const solution = (input: [string, string][]) => {
+const solution = (input: string[][]) => {
 	return input
 		.map((groups) => getRepeatedLetters(...groups))
 		.map((letters) => letters.map(getNumericValue))
@@ -39,10 +36,14 @@ const solution = (input: [string, string][]) => {
 		.reduce((total, n) => total + n, 0);
 };
 
-const concatByMultiplesOfN = (input: string[], n: number): string[] => {
-	const result: string[] = [];
+const concatByMultiplesOfN = (input: string[], n: number): string[][] => {
+	const result: string[][] = [];
 	for (let i = 0; i < input.length; i += n) {
-		result.push(input.slice(i, i + n).join(""));
+		const group: string[] = [];
+		for (let j = i; j < i + n; j++) {
+			group.push(input[j]);
+		}
+		result.push(group);
 	}
 	return result;
 };
