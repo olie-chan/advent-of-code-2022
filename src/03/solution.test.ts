@@ -31,8 +31,7 @@ it("answers the example question", () => {
 });
 
 it("answers the question", () => {
-	const input = parseFileInput(path.join(__dirname, "./input.txt")).map(
-		splitInTwo
-	);
-	expect(solution(input)).toEqual(7903);
+	const input = parseFileInput(path.join(__dirname, "./input.txt"));
+	expect(solution(input.map(splitInTwo))).toEqual(7903);
+	expect(solution((concatByMultiplesOfN(input, 3)))).toEqual(2548);
 });
