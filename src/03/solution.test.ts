@@ -1,4 +1,5 @@
-import { getNumericValue, splitInTwo } from "./solution";
+import { getNumericValue, getRepeatedLetters, solution, splitInTwo } from "./solution";
+import path from "path";
 
 it("converts a letter to a numeric value", () => {
 	expect(getNumericValue("A")).toEqual(27);
@@ -9,4 +10,14 @@ it("converts a letter to a numeric value", () => {
 
 it("splits a string in two", () => {
 	expect(splitInTwo("abcd")).toStrictEqual(["ab", "cd"]);
+});
+
+it("gets the repeated letters", () => {
+	expect(
+		getRepeatedLetters("abc", "bcd")
+	).toStrictEqual(["b", "c"]);
+});
+
+it("answers the example question", () => {
+	expect(solution(path.join(__dirname, "./sample.txt"))).toEqual(157);
 });
