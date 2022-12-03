@@ -33,7 +33,8 @@ module.exports = {
 		"semi": [
 			"error",
 			"always"
-		]
+		],
+		"no-mixed-spaces-and-tabs": "off",
 	},
 	"ignorePatterns": [
 		"dist"

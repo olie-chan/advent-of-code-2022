@@ -1,18 +1,25 @@
 import { readFileSync } from "fs";
 
 const getNumericValue = (letter: string): number =>
-	letter.toLowerCase() === letter ? letter.charCodeAt(0) - 96 : letter.charCodeAt(0) - 38;
+	letter.toLowerCase() === letter
+		? letter.charCodeAt(0) - 96
+		: letter.charCodeAt(0) - 38;
 
 const splitInTwo = (input: string): [string, string] => [
-	input.slice(0, input.length / 2), input.slice(input.length / 2)
+	input.slice(0, input.length / 2),
+	input.slice(input.length / 2),
 ];
 
 const getRepeatedLetters = (left: string, right: string): string[] => {
 	const uniqueLeft = new Set([...left]);
 	const uniqueRight = new Set([...right]);
 	const repeated: string[] = [];
-	for (const letter of uniqueLeft.values())  {
-		if (uniqueRight.has(letter)) {
+	const [longer, shorter] =
+    uniqueLeft.size > uniqueRight.size
+    	? [uniqueLeft, uniqueRight]
+    	: [uniqueRight, uniqueLeft];
+	for (const letter of longer.values()) {
+		if (shorter.has(letter)) {
 			repeated.push(letter);
 		}
 	}
@@ -24,13 +31,27 @@ const parseFileInput = (path: string): string[] => {
 	return contents;
 };
 
-const solution = (inputFilePath: string) => {
-	return parseFileInput(inputFilePath)
-		.map(splitInTwo)
+const solution = (input: [string, string][]) => {
+	return input
 		.map((groups) => getRepeatedLetters(...groups))
 		.map((letters) => letters.map(getNumericValue))
 		.flat()
 		.reduce((total, n) => total + n, 0);
 };
 
-export { getNumericValue, splitInTwo, getRepeatedLetters, parseFileInput, solution };
+const concatByMultiplesOfN = (input: string[], n: number): string[] => {
+	const result: string[] = [];
+	for (let i = 0; i < input.length; i += n) {
+		result.push(input.slice(i, i + n).join(""));
+	}
+	return result;
+};
+
+export {
+	getNumericValue,
+	splitInTwo,
+	getRepeatedLetters,
+	parseFileInput,
+	solution,
+	concatByMultiplesOfN,
+};
