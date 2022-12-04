@@ -11,26 +11,28 @@ const parseFileInput = (path: string): Range[][] => {
 	return lines.map(parseRange);
 };
 
+type MapFn = (a: Range, b: Range) => boolean;
 // a fits into b?
-const isInclusive = (a: Range, b: Range): boolean =>
-	a[0] >= b[0] && a[1] <= b[1];
+const isInclusive: MapFn = (a, b) => a[0] >= b[0] && a[1] <= b[1];
 
-const listHasInclusiveRange = (list: Range[]): boolean => {
-	let result = false;
-	for (let i = 0; i < list.length; i++) {
-		if (result) {
-			return result;
-		}
-		result = list
-			.slice(0, i)
-			.concat(list.slice(i + 1))
-			.some((range) => isInclusive(list[i], range));
-	}
-	return result;
-};
+const createMapper =
+  (mapFn: MapFn) =>
+  	(list: Range[]): boolean => {
+  		let result = false;
+  		for (let i = 0; i < list.length; i++) {
+  			if (result) {
+  				return result;
+  			}
+  			result = list
+  				.slice(0, i)
+  				.concat(list.slice(i + 1))
+  				.some((range) => mapFn(list[i], range));
+  		}
+  		return result;
+  	};
 
 const getTotalInclusiveRanges = (input: Range[][]): number => {
-	return input.map(listHasInclusiveRange).filter(Boolean).length;
+	return input.map(createMapper(isInclusive)).filter(Boolean).length;
 };
 
 export { parseFileInput, getTotalInclusiveRanges };
