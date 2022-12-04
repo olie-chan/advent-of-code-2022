@@ -15,6 +15,9 @@ type MapFn = (a: Range, b: Range) => boolean;
 // a fits into b?
 const isInclusive: MapFn = (a, b) => a[0] >= b[0] && a[1] <= b[1];
 
+const isPartiallyInclusive: MapFn = (a, b) =>
+	(a[0] <= b[0] && a[1] >= b[1]) || (a[0] <= b[1] && a[1] >= b[1]);
+
 const createMapper =
   (mapFn: MapFn) =>
   	(list: Range[]): boolean => {
@@ -34,5 +37,8 @@ const createMapper =
 const getTotalInclusiveRanges = (input: Range[][]): number => {
 	return input.map(createMapper(isInclusive)).filter(Boolean).length;
 };
+const getPartialInclusiveRanges = (input: Range[][]): number => {
+	return input.map(createMapper(isPartiallyInclusive)).filter(Boolean).length;
+};
 
-export { parseFileInput, getTotalInclusiveRanges };
+export { parseFileInput, getTotalInclusiveRanges, getPartialInclusiveRanges };
