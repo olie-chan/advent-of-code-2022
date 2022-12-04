@@ -1,5 +1,7 @@
 import { readFileSync } from "fs";
 
+//https://adventofcode.com/2022/day/3
+
 const getNumericValue = (letter: string): number =>
 	letter.toLowerCase() === letter
 		? letter.charCodeAt(0) - 96
