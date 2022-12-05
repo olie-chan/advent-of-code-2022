@@ -15,28 +15,28 @@ const parseFileInput = (path: string): Instruction[] => {
 	return input.map(parseLine);
 };
 
-const solution = (
-	instructions: Instruction[],
-	getColumns: () => string[][]
-): string => {
-	const columns = getColumns();
+const mover9000 = (instructions: Instruction[], columns: string[][]): string[][] => {
 	for (const [quantity, position, target] of instructions) {
-		console.log({
-			quantity,
-			position,
-			target,
-			targetColumn: columns[target],
-			targetPosition: columns[position],
-		});
 		columns[target] = columns[target].concat(
 			columns[position].slice(-quantity).reverse()
 		);
+		columns[position] = columns[position].slice(0, -quantity);
 	}
 
-	return columns
-		.map((column) => column.pop())
-		.filter(Boolean)
-		.join("");
+	return columns;
 };
 
-export { parseFileInput, solution };
+const solution =
+  (instructions: Instruction[], getColumns: () => string[][]) =>
+  	(
+  		mover: (instructions: Instruction[], columns: string[][]) => string[][]
+  	): string => {
+  		const columns = mover(instructions, getColumns());
+
+  		return columns
+  			.map((column) => column.pop())
+  			.filter(Boolean)
+  			.join("");
+  	};
+
+export { parseFileInput, solution, mover9000 };
