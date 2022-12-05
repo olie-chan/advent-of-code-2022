@@ -1,7 +1,11 @@
-import { parseFileInput } from "./solution";
+import { parseFileInput, solution } from "./solution";
 import path from "path";
 
-const getSampleCrates = () => [["Z", "N", "D"], ["M", "C"], ["P"]];
+const getSampleCrates = () => [
+	["Z", "N"],
+	["M", "C", "D"],
+	["P"]
+];
 
 const getInputCrates = () => [
 	["V", "C", "D", "R", "Z", "G", "B", "W"],
@@ -20,9 +24,12 @@ const sampleInstructions = parseFileInput(path.join(__dirname, "sample.txt"));
 it("parses the instructions for the sample text", () => {
 	console.log({ sampleInstructions });
 	expect(sampleInstructions).toStrictEqual([
-		[1, 1, 1],
-		[3, 0, 3],
-		[2, 1, 1],
-		[1, 0, 2]
+		[1, 1, 0],
+		[3, 0, 2],
+		[2, 1, 0],
+		[1, 0, 1]
 	]);
 });
+
+it("answers the sample question", () => {
+	expect(solution(sampleInstructions, getSampleCrates)).toBe("CMZ"); });
