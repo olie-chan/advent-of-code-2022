@@ -25,6 +25,16 @@ const mover9000 = (instructions: Instruction[], columns: string[][]): string[][]
 
 	return columns;
 };
+const mover9001 = (instructions: Instruction[], columns: string[][]): string[][] => {
+	for (const [quantity, position, target] of instructions) {
+		columns[target] = columns[target].concat(
+			columns[position].slice(-quantity)
+		);
+		columns[position] = columns[position].slice(0, -quantity);
+	}
+
+	return columns;
+};
 
 const solution =
   (instructions: Instruction[], getColumns: () => string[][]) =>
@@ -39,4 +49,4 @@ const solution =
   			.join("");
   	};
 
-export { parseFileInput, solution, mover9000 };
+export { parseFileInput, solution, mover9000, mover9001 };

@@ -1,4 +1,4 @@
-import { mover9000, parseFileInput, solution } from "./solution";
+import { mover9000, mover9001, parseFileInput, solution } from "./solution";
 import path from "path";
 
 const getSampleCrates = () => [["Z", "N"], ["M", "C", "D"], ["P"]];
@@ -29,7 +29,9 @@ it("parses the instructions for the sample text", () => {
 
 it("answers the sample question", () => {
 	expect(solution(sampleInstructions, getSampleCrates)(mover9000)).toBe("CMZ");
+	expect(solution(sampleInstructions, getSampleCrates)(mover9001)).toBe("MCD");
 });
 it("answers the first question", () => {
 	expect(solution(instructions, getInputCrates)(mover9000)).toBe("TBVFVDZPN");
+	expect(solution(instructions, getInputCrates)(mover9001)).toBe("VLCWHTDSZ");
 });
