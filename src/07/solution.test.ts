@@ -1,4 +1,4 @@
-import { getFileTree } from "./solution";
+import { getFileTree, mapTreeToDirectorySizes } from "./solution";
 import { readFileSync } from "fs";
 import path from "path";
 
@@ -10,10 +10,8 @@ const input = readFileSync(path.join(__dirname, "input.txt"), "utf8")
 	.trim()
 	.split("\n");
 
-console.log(JSON.stringify(getFileTree(sampleInput), null, 2));
 
 it("gets the file tree for a set of instructions", () => {
-
 	expect(getFileTree(sampleInput)).toStrictEqual({
 		"/": {
 			a: {
@@ -33,5 +31,33 @@ it("gets the file tree for a set of instructions", () => {
 				k: 7214296,
 			},
 		},
+	});
+});
+
+it("creates a list of directory sizes", () => {
+	expect(mapTreeToDirectorySizes({
+		"/": {
+			a: {
+				e: {
+					"i": 1,
+				},
+				f: 1,
+				g: 1,
+				"h.lst": 1,
+			},
+			"b.txt": 1,
+			"c.dat": 1,
+			d: {
+				j: 1,
+				"d.log": 1,
+				"d.ext": 1,
+				k: 1,
+			},
+		},
+	})).toStrictEqual({
+		"/a/e/i": 1,
+		"/a": 4,
+		"/d":4,
+		"/": 10
 	});
 });

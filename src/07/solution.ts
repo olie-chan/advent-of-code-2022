@@ -29,13 +29,53 @@ const getFileTree = (instructions: string[]): any => {
 			addValue(tree, path);
 		}
 		if (isFile(row)) {
-
 			const [value, target] = row.split(" ");
 			addValue(tree, path.concat(target), Number.parseInt(value));
 		}
-
 	}
 	return tree;
 };
 
-export { getFileTree };
+const getPaths = (tree: any, result: Set<string> = new Set(), path: string[] = []) => {
+	for (const key in tree) {
+		if (typeof tree[key] !== "number") {
+			getPaths(tree[key], result, path.concat(key));
+		} else {
+			result.add(path.slice(1).join("/"));
+		}
+	}
+
+	return [...result.values()].map(p => p.split("/"));
+};
+
+const sumTreeValues = (
+	tree: any,
+	result: number[] = [],
+): any => {
+
+	for (const key in tree) {
+		const val = tree[key];
+		if (typeof tree[key] !== "number") {
+			sumTreeValues(tree[key], result);
+		} else {
+			result.push(val);
+		}
+	}
+
+
+	return result.reduce((a, b) => a + b, 0);
+};
+
+const mapTreeToDirectorySizes = (
+	tree: any,
+): any => {
+	const result: any = {};
+	for (const paths of getPaths(tree)) {
+		const subTree = paths.reduce((a, b) => a[b], tree);
+		result[paths.join("/")] = sumTreeValues(subTree);
+	}
+
+	return result;
+};
+
+export { getFileTree, mapTreeToDirectorySizes };
