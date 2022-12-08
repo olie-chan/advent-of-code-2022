@@ -1,4 +1,4 @@
-import { countVisibleTrees, parseFile, isVisible } from "./solution";
+import { countVisibleTrees, parseFile, isVisible, calculateScenicScore, getVisibleTreeCount } from "./solution";
 import path from "path";
 
 const sampleInput = parseFile(path.join(__dirname, "sample.txt"));
@@ -30,3 +30,10 @@ it("counts the number of visible trees", () => {
 	expect(countVisibleTrees(sampleInput)).toBe(21);
 	expect(countVisibleTrees(input)).toBe(1715);
 });
+
+it("gets the visible tree count", () => {
+	expect(getVisibleTreeCount([1,2,3,4,5], 3)).toBe(5);
+});
+// it("calculates the best scenic score", () => {
+// 	expect(calculateScenicScore(sampleInput)).toBe(8);
+// });
