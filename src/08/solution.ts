@@ -45,16 +45,15 @@ const countVisibleTrees = (trees: number[][]) => {
 
 const getVisibleTreeCount = (trees: number[], tree: number) => {
 	let count = 0;
-	let current = tree;
+	let currentTallest = -Infinity;
 	for (const t of trees) {
-		if (t == current) {
+		if (t > currentTallest) {
+			currentTallest = t;
 			count++;
-			break;
+			continue;
 		}
-		if (t > current) {
-			count++;
-			current = tree;
-		}
+
+
 	}
 
 	return count;

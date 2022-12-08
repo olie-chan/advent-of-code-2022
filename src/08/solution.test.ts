@@ -34,6 +34,6 @@ it("counts the number of visible trees", () => {
 it("gets the visible tree count", () => {
 	expect(getVisibleTreeCount([1,2,3,4,5], 3)).toBe(5);
 });
-// it("calculates the best scenic score", () => {
-// 	expect(calculateScenicScore(sampleInput)).toBe(8);
-// });
+it("calculates the best scenic score", () => {
+	expect(calculateScenicScore(sampleInput)).toBe(8);
+});
