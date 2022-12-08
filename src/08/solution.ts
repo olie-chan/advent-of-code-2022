@@ -18,12 +18,8 @@ const getTreesRight = (trees: number[][], y: number, x: number) =>
 
 const isVisible = (trees: number[][], y: number, x: number) => {
 	const tree = trees[y][x];
-	const compareFn = (t: number, c: number) => {
-		if (c == t && t < tree) {
-			return c;
-		}
-		return c < t ? c : -Infinity;
-	};
+	const compareFn = (t: number, c: number) => (c < t ? t : -Infinity);
+
 	const visibileMap = [
 		getTreesAbove,
 		getTreesBelow,
@@ -45,4 +41,4 @@ const countVisibleTrees = (trees: number[][]) => {
 	return count;
 };
 
-export { parseFile, countVisibleTrees };
+export { parseFile, countVisibleTrees, isVisible };

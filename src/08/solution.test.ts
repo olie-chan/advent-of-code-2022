@@ -1,4 +1,4 @@
-import { countVisibleTrees, parseFile } from "./solution";
+import { countVisibleTrees, parseFile, isVisible } from "./solution";
 import path from "path";
 
 const sampleInput = parseFile(path.join(__dirname, "sample.txt"));
@@ -16,7 +16,17 @@ it("parses the input", () => {
 	);
 });
 
+it("checks if a tree is visible", () => {
+	expect(isVisible([
+		[5,5,4,5,5],
+		[5,4,4,4,5],
+		[4,4,6,4,4],
+		[5,4,4,4,5],
+		[5,5,4,5,5],
+	], 2, 2)).toBe(true);
+});
+
 it("counts the number of visible trees", () => {
 	expect(countVisibleTrees(sampleInput)).toBe(21);
-	expect(countVisibleTrees(input)).toBe(665);
+	expect(countVisibleTrees(input)).toBe(1715);
 });
