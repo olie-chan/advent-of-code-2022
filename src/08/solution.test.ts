@@ -1,9 +1,8 @@
-import { parseFile } from "./solution";
+import { countVisibleTrees, parseFile } from "./solution";
 import path from "path";
 
 const sampleInput = parseFile(path.join(__dirname, "sample.txt"));
 
-console.log(sampleInput);
 it("parses the input", () => {
 	expect(sampleInput).toStrictEqual(
 		[
@@ -14,4 +13,8 @@ it("parses the input", () => {
 			[ 3, 5, 3, 9, 0 ]
 		]
 	);
+});
+
+it("counts the number of visible trees", () => {
+	expect(countVisibleTrees(sampleInput)).toBe(21);
 });
