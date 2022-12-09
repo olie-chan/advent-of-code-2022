@@ -4,7 +4,7 @@ import path from "path";
 const sampleInput = parseFile(path.join(__dirname, "sample.txt"));
 
 it("tests something", () => {
-	expect(getHeadPositions(sampleInput)).toBe([
+	expect(getHeadPositions(sampleInput)).toStrictEqual([
 		[0, 0],
 		[1, 0],
 		[2, 0],

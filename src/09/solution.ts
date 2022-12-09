@@ -41,11 +41,14 @@ const getHeadPositions = (instructions: [string, number][]) => {
 	for (const [dir, val] of instructions) {
 		const last = history.slice(-1)[0];
 		const travelled = handleInstruction([dir, val], last);
-		console.log(travelled);
 		history = [...history, ...travelled.slice(1)];
 	}
 
 	return history;
+};
+
+const getTailPositions = (headPositions: [number, number][]) => {
+	return [];
 };
 
 export { getHeadPositions, parseFile };
