@@ -1,7 +1,8 @@
-import { getHeadPositions, getTailPositions, parseFile } from "./solution";
+import { getCountOfUniqueTailPositions, getHeadPositions, getTailPositions, parseFile } from "./solution";
 import path from "path";
 
 const sampleInput = parseFile(path.join(__dirname, "sample.txt"));
+const input = parseFile(path.join(__dirname, "input.txt"));
 
 
 it("gets the positions the head has travelled", () => {
@@ -51,4 +52,9 @@ it("gets the positions the tail has travelled", () => {
 		[2,2],
 		[1,2], // L 5 / R 2
 	]);
+});
+
+it("gets the count of unique tail positions", () => {
+	expect(getCountOfUniqueTailPositions(sampleInput)).toBe(13);
+	expect(getCountOfUniqueTailPositions(input)).toBe(13);
 });

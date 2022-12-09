@@ -35,9 +35,7 @@ const handleInstruction = (
 	return result as [number, number][];
 };
 const getHeadPositions = (instructions: [string, number][]) => {
-	let history: [number, number][] = [
-		[0, 0]
-	];
+	let history: [number, number][] = [[0, 0]];
 	for (const [dir, val] of instructions) {
 		const last = history.slice(-1)[0];
 		const travelled = handleInstruction([dir, val], last);
@@ -48,9 +46,7 @@ const getHeadPositions = (instructions: [string, number][]) => {
 };
 
 const getTailPositions = (headPositions: [number, number][]) => {
-	const history: [number, number][] = [
-		[0, 0]
-	];
+	const history: [number, number][] = [[0, 0]];
 	let [xt, yt] = [0, 0];
 	for (let i = 0; i < headPositions.length; i++) {
 		const [xh, yh] = headPositions[i];
@@ -84,9 +80,23 @@ const getTailPositions = (headPositions: [number, number][]) => {
 			xt = xh;
 		}
 		history.push([xt, yt]);
-
 	}
 	return history;
 };
 
-export { getHeadPositions, getTailPositions, parseFile };
+const getCountOfUniqueTailPositions = (instructions: [string, number][]) => {
+	const headPositions = getHeadPositions(instructions);
+	const tailPositions = getTailPositions(headPositions);
+	const setOfPositions = new Set();
+	for (const position of tailPositions) {
+		setOfPositions.add(position.join(","));
+	}
+	return setOfPositions.size;
+};
+
+export {
+	getHeadPositions,
+	getTailPositions,
+	parseFile,
+	getCountOfUniqueTailPositions,
+};
