@@ -1,4 +1,4 @@
-import { countVisibleTrees, parseFile, isVisible, calculateScenicScore, getVisibleTreeCount } from "./solution";
+import { countVisibleTrees, parseFile, isVisible, calculateScenicScore, getMaxViewingDistance } from "./solution";
 import path from "path";
 
 const sampleInput = parseFile(path.join(__dirname, "sample.txt"));
@@ -32,8 +32,17 @@ it("counts the number of visible trees", () => {
 });
 
 it("gets the visible tree count", () => {
-	expect(getVisibleTreeCount([1,2,3,4,5], 3)).toBe(5);
+	expect(getMaxViewingDistance([1,2,3,4,5], 5)).toBe(5);
+	expect(getMaxViewingDistance([3,5,3], 3)).toBe(1);
+	expect(getMaxViewingDistance([4,9], 2)).toBe(1);
+	expect(getMaxViewingDistance([3,0,3], 7)).toBe(1);
+	expect(getMaxViewingDistance([3,0,3,7, 8], 7)).toBe(4);
+	expect(getMaxViewingDistance([3,0,3,7, 1, 4, 7], 7)).toBe(4);
+	expect(getMaxViewingDistance([1,2,3,4,5,6,7,8,9], 7)).toBe(7);
+	expect(getMaxViewingDistance([6,2,3,4,5,6,7,8,9], 7)).toBe(7);
+	expect(getMaxViewingDistance([], 7)).toBe(0);
 });
 it("calculates the best scenic score", () => {
 	expect(calculateScenicScore(sampleInput)).toBe(8);
+	expect(calculateScenicScore(input)).toBe(12740);
 });

@@ -16,18 +16,15 @@ const getTreesLeft = (trees: number[][], y: number, x: number) =>
 const getTreesRight = (trees: number[][], y: number, x: number) =>
 	trees[y].slice(x + 1);
 
-const getTreeFns = [
-	getTreesAbove,
-	getTreesBelow,
-	getTreesLeft,
-	getTreesRight,
-];
+const getTreeFns = [getTreesAbove, getTreesBelow, getTreesLeft, getTreesRight];
 
 const isVisible = (trees: number[][], y: number, x: number) => {
 	const tree = trees[y][x];
 	const compareFn = (t: number, c: number) => (c < t ? t : -Infinity);
 
-	const visibileMap = getTreeFns.map((f) => f(trees, y, x).reduce(compareFn, tree));
+	const visibileMap = getTreeFns.map((f) =>
+		f(trees, y, x).reduce(compareFn, tree)
+	);
 	return visibileMap.some((v) => Number.isFinite(v));
 };
 
@@ -43,20 +40,13 @@ const countVisibleTrees = (trees: number[][]) => {
 	return count;
 };
 
-const getVisibleTreeCount = (trees: number[], tree: number) => {
-	let count = 0;
-	let currentTallest = -Infinity;
-	for (const t of trees) {
-		if (t > currentTallest) {
-			currentTallest = t;
-			count++;
-			continue;
-		}
-
-
+//    ***** { v: [ 0, 4, 3, 1 ], i: 0, j: 3, tree: 7 }
+const getMaxViewingDistance = (trees: number[], tree: number) => {
+	let result = -Infinity;
+	for (let i = 0; i <= tree; i++) {
+		result = Math.max(result, trees.findIndex(t => t >= i) + 1);
 	}
-
-	return count;
+	return result;
 };
 
 const calculateScenicScore = (trees: number[][]) => {
@@ -64,20 +54,26 @@ const calculateScenicScore = (trees: number[][]) => {
 	for (let i = 0; i < trees.length; i++) {
 		for (let j = 0; j < trees[i].length; j++) {
 			const tree = trees[i][j];
-			const v = getTreeFns.map(f => f(trees, i, j)).map(t => getVisibleTreeCount(t, tree)).filter(Boolean);
-			const something = v.reduce((a, b) => a * b, 1);
-			if (something > score) {
-				score = something;
-				console.log({
-					i, j,
-					tree,
-					score,
-					v
+			const v = getTreeFns
+				.map((f) => f(trees, i, j))
+				.map((t, treeIndex) => {
+					if (treeIndex == 0 || treeIndex == 2) {
+						//above or to the left need reversing
+						t.reverse();
+					}
+					return getMaxViewingDistance(t, tree);
 				});
-			}
+			const something = v.filter(Boolean).reduce((a, b) => a * b, 1);
+			score = Math.max(score, something);
 		}
 	}
 	return score;
 };
 
-export { parseFile, countVisibleTrees, isVisible, calculateScenicScore, getVisibleTreeCount };
+export {
+	parseFile,
+	countVisibleTrees,
+	isVisible,
+	calculateScenicScore,
+	getMaxViewingDistance,
+};
