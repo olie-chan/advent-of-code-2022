@@ -48,7 +48,27 @@ const getHeadPositions = (instructions: [string, number][]) => {
 };
 
 const getTailPositions = (headPositions: [number, number][]) => {
-	return [];
+	const history: [number, number][] = [
+	];
+	let changedDirection = false;
+	for (let i = 0; i < headPositions.length; i++) {
+		const [x1, y1] = headPositions[i];
+		const last = headPositions[i-1];
+		if (!last) {
+			//Started
+			continue;
+		}
+		const [x0, y0] = last;
+		if (y0 != y1 && !changedDirection) {
+			changedDirection = true;
+			//Moved up or down
+			continue;
+		}
+		changedDirection = false;
+		history.push(last);
+	}
+
+	return history;
 };
 
-export { getHeadPositions, parseFile };
+export { getHeadPositions, getTailPositions, parseFile };
