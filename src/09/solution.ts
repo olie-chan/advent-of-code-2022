@@ -49,25 +49,43 @@ const getHeadPositions = (instructions: [string, number][]) => {
 
 const getTailPositions = (headPositions: [number, number][]) => {
 	const history: [number, number][] = [
+		[0, 0]
 	];
-	let changedDirection = false;
+	let [xt, yt] = [0, 0];
 	for (let i = 0; i < headPositions.length; i++) {
-		const [x1, y1] = headPositions[i];
-		const last = headPositions[i-1];
-		if (!last) {
-			//Started
-			continue;
-		}
-		const [x0, y0] = last;
-		if (y0 != y1 && !changedDirection) {
-			changedDirection = true;
-			//Moved up or down
-			continue;
-		}
-		changedDirection = false;
-		history.push(last);
-	}
+		const [xh, yh] = headPositions[i];
+		const [dx, dy] = [xh - xt, yh - yt];
 
+		// Don't move if we're adjacent
+		if (dx ** 2 + dy ** 2 <= 2) {
+			continue;
+		}
+
+		//Directly above
+		if (dx == 0) {
+			yt = yt + dy / 2;
+			history.push([xt, yt]);
+			continue;
+		}
+
+		//Same plane
+		if (dy == 0) {
+			xt = xt + dx / 2;
+			history.push([xt, yt]);
+			continue;
+		}
+
+		//Diagonal
+		if (Math.abs(dx) > Math.abs(dy)) {
+			xt = xt + dx / 2;
+			yt = yh;
+		} else {
+			yt = yt + dy / 2;
+			xt = xh;
+		}
+		history.push([xt, yt]);
+
+	}
 	return history;
 };
 

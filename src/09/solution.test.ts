@@ -3,7 +3,6 @@ import path from "path";
 
 const sampleInput = parseFile(path.join(__dirname, "sample.txt"));
 
-console.log(getTailPositions(getHeadPositions(sampleInput)));
 
 it("gets the positions the head has travelled", () => {
 	expect(getHeadPositions(sampleInput)).toStrictEqual([
